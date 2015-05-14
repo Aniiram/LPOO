@@ -1,15 +1,36 @@
 package labirinto;
 
+import java.io.Serializable;
 import java.util.Random;
 import java.util.Stack;
 
-public class Tabuleiro {
-	Tabuleiro() {
+/**
+ * Tabuleiro.java - Esta classe constroi o tabuleiro que dá base ao Jogo do Labirinto
+ * @author Carolina Moreira e Marina Camilo
+ * Project 1 - LPOO
+ */
+/**
+ * @author alcamilo
+ *
+ */
+public class Tabuleiro implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Cria um caminho aleatório que será a base do jogo, este tem um tamanho defenido de 7
+	 */
+	public Tabuleiro() {
 		inicializarTabuleiro();
 		inicializarCaminho();
 		tabuleiroInicial [saida.getX()][saida.getY()] = saida.getType();
 	}
 	
+	/**
+	 * Cria um caminho aleatório que será a base do jogo, este tem um tamanho que será defenido pelo utilizador
+	 * 
+	 * @param tamanho Uma variavel do tipo inteiro
+	 */
 	Tabuleiro(int tamanho) {
 		TAMANHO = tamanho;
 		TAMCELVAZ = (TAMANHO-1)/2;
@@ -20,7 +41,19 @@ public class Tabuleiro {
 		tabuleiroInicial [saida.getX()] [saida.getY()] = saida.getType();
 	}
 	
-	int TAMANHO = 7;
+	/**
+	 * Guarda o Tabuleiro fefenido pelo utilizador tam com a peca saida
+	 *  
+	 * @param cam Uma variavel do tipo array de caracteres
+	 * @param s Uma variavel do tipo da classe de Peca
+	 */
+	public Tabuleiro(char[][] cam, Peca s) {
+		tabuleiroInicial = cam;
+		saida = s;
+		TAMANHO = cam.length;
+	}
+	
+	public int TAMANHO = 7;
 	private int TAMCELVAZ = (TAMANHO-1)/2;
 	
 	private char [] [] tabuleiroInicial = new char [TAMANHO] [TAMANHO];
@@ -29,18 +62,28 @@ public class Tabuleiro {
 	private Stack<Integer> stackX = new Stack<Integer>();
 	private Stack<Integer> stackY = new Stack<Integer>();
 	
-	//Peca Saida inicializar e imprimir e modificar
+	/**
+	 * Peca Saida inicializar e imprimir e modificar
+	 */
 	private Peca saida; 
 	
+	/**
+	 * @return Uma variavel do tipo da classe de Peca
+	 */
 	public Peca getSaida() {
 		return saida;
 	}
 
+	/**
+	 * @param saida Uma variavel do tipo da classe Peca
+	 */
 	public void setSaida(Peca saida) {
 		this.saida = saida;
 	}
 	
-	//Preparar as variáveis para abrir Caminho
+	/** 
+	 * Preparar as variáveis para abrir Caminho
+	 */
 	void inicializarSaida() {
 		Random r = new Random();
 		int escolha, x = 0, y = 0, xHead = 0, yHead = 0;
@@ -80,6 +123,9 @@ public class Tabuleiro {
 		headCell[1] = yHead;
 	}
 	
+	/**
+	 * Inicializa o tabuleiro
+	 */
 	final void inicializarTabuleiro() {
 		for (int i = 0; i < TAMANHO; i++) 
 			for (int j = 0; j < TAMANHO; j++) 
@@ -100,6 +146,9 @@ public class Tabuleiro {
 		return false;
 	}
 	
+	/**
+	 * Inicializa o caminho
+	 */
 	final void inicializarCaminho() {
 		
 		inicializarSaida();
@@ -154,7 +203,11 @@ public class Tabuleiro {
 		stackY.push(headCell[1]);
 	}
 	
-	//Abrir Caminho 
+	/**
+	 * Abre o caminho
+	 *
+	 * @return Uma variavel do tipo boleano
+	 */
 	private boolean deadEnd() {
 		if((headCell[0] - 1) >= 0)
 			if(visitedCells [headCell[0] - 1] [headCell[1]] != '+')
@@ -193,7 +246,9 @@ public class Tabuleiro {
 		return false;
 	}
 	
-	//print variáveis da Classe
+	/**
+	 * Faz print na consola das variáveis da classe
+	 */
 	public void printHeadCell() {
 		System.out.println(headCell[0]);
 		System.out.println(headCell[1]);
@@ -210,6 +265,11 @@ public class Tabuleiro {
 		}
 	}
 	
+	/**
+	 * Cria um clone da variavel tabuleiroInicial 
+	 * 
+	 * @return Uma variavel do tipo array de caracteres
+	 */
 	public char [] [] tabuleiroClone() {
 		char[][] A2 = tabuleiroInicial.clone();
 		for (int i = 0; i < A2.length; i++) {
@@ -217,4 +277,26 @@ public class Tabuleiro {
 		}
 		return A2;
 	}
+
+	/**
+	 * Devolve o conteudo defenido pelas coordenadas do tabuleiro inicial
+	 *
+	 * @param i Uma variavel do tipo inteiro
+	 * @param j Uma variavel do tipo inteiro
+	 * @return Uma variavel do tipo caracter
+	 */
+	public char getChar(int i, int j) {
+		return tabuleiroInicial[i][j];
+	}
+
+	/**
+	 * Devolve o apontador do array completo do tabuleiro inicial
+	 *
+	 * @return Uma variavel do tipo array de caracteres
+	 */
+	public char[][] getTabuleiroInicial() {
+		return tabuleiroInicial;
+	}
+
+	
 }

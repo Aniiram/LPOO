@@ -1,6 +1,7 @@
-package labirinto;
+package maze.cli;
 
 import java.util.*;
+import labirinto.Labirinto;
 
 public class Main {
 
@@ -32,6 +33,10 @@ public class Main {
 			System.out.println("S - baixo");
 			System.out.println("D - direita");
 			System.out.println("A - esquerda");
+			System.out.println("I - atacar cima");
+			System.out.println("K - atacar baixo");
+			System.out.println("L - atacar direita");
+			System.out.println("J - atacar esquerda");
 			System.out.println("Comando para mover heroi:");
 						
 			
@@ -50,4 +55,5 @@ public class Main {
 		else	System.out.println("PERDEU!");
 	
 	}
+
 }
